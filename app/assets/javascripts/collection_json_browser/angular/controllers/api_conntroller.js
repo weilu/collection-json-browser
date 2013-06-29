@@ -3,8 +3,6 @@
 function ApiController($scope, $http, $location) {
   delete $http.defaults.headers.common['X-Requested-With']
 
-  console.log('in controller')
-
   $scope.get = function(path){
     $http.get(path).success(function(data) {
       $scope.collection = data.collection;
