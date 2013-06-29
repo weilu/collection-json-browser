@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+    <meta charset="utf-8">
+    <title>Collection+JSON Browser</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+    <%= javascript_include_tag "collection_json_browser/application" %>
+    <%= stylesheet_link_tag    "collection_json_browser/application", :media => "all" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <%= yield %>
+
+</html>
