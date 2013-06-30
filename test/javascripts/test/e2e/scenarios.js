@@ -9,12 +9,12 @@ describe('Collection JSON Browser', function() {
   });
 
   it('displays 2 links', function() {
-    expect(repeater('.links tr').count()).toBe(2);
+    expect(repeater('.links tr a').count()).toBe(2);
   });
 
-  it('clicking on a links sets browser location', function() {
-    element('.links a.authentication.email').click();
+  it('clicking on a link sets browser location', function() {
+    element(".links a:contains('sign_in')").click();
     expect(browser().location().url()).toBe('/api/sign_in');
-    expect(repeater('.links tr').count()).toBe(0);
+    expect(repeater('.links tr a').count()).toBe(0);
   });
 });
