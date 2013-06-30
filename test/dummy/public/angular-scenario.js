@@ -1,0 +1,1 @@
+../../javascripts/test/lib/angular/angular-scenario.js
