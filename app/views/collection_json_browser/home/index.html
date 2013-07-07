@@ -35,7 +35,7 @@
               <th>prompt</th>
               <th>get</th>
             </tr>
-            <tr ng-repeat="link in collection.links">
+            <tr ng-repeat="link in links">
               <td>{{link.rel}}</td>
               <td>{{link.name}}</td>
               <td>{{link.prompt}}</td>
@@ -45,6 +45,15 @@
             </tr>
           </table>
         </div>
+
+        <h2>Images</h2>
+        <ul ng-repeat="image in images" class="images unstyled row-fluid">
+          <li class="span3">
+            <div class="thumbnail">
+              <img ng-src={{image.href}} title={{image.rel}} width=150/>
+            </div>
+          </li>
+        </ul>
 
         <h2>Items</h2>
         <div class="items thumbnail">
@@ -110,7 +119,12 @@
 
       </div>
       <div class="span6">
-        <h2>Raw response</h2>
+        <h2>Status</h2>
+        <div class="status">
+          {{status}}
+        </div>
+
+        <h2>Response body</h2>
         <pre class="raw">{{raw}}</pre>
       </div>
     </div>

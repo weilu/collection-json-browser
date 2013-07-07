@@ -26,9 +26,24 @@ function ApiController($scope, $http, $location) {
     $http.get(path).success(successHandler)
   }
 
-  function successHandler(data) {
+  function successHandler(data, status) {
+    var links = data.collection.links
+    if(links) {
+      $scope.images = links.filter(function(link){
+        return link.render === 'image'
+      })
+      $scope.links = links.filter(function(link){
+        return link.render !== 'image'
+      })
+    } else {
+      $scope.images = undefined
+      $scope.links = undefined
+    }
+
+
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
+    $scope.status = status
 
     $location.path($scope.collection.href)
   }

@@ -13,10 +13,9 @@ module Api
               prompt: "My posts"
             },
             {
-              href: "/api/users",
-              rel: "users",
-              name: "users",
-              prompt: "All users"
+              href: "/assets/cat.gif",
+              rel: "logo",
+              render: "image"
             }
           ]
         }

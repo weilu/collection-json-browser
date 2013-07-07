@@ -7,8 +7,16 @@ describe('Collection JSON Browser', function() {
     browser().navigateTo('/doc');
   });
 
-  it('displays 2 links', function() {
-    expect(repeater('.links tr a').count()).toBe(2);
+  it('displays 1 link', function() {
+    expect(repeater('.links tr a').count()).toBe(1);
+  });
+
+  it('displays 1 image', function() {
+    expect(repeater('.images img').count()).toBe(1);
+  });
+
+  it('displays response status', function() {
+    expect(element('.status').text()).toMatch(/\s200\s/);
   });
 
   describe('clicking on posts link', function(){
