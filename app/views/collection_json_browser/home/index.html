@@ -11,11 +11,11 @@
 
         <h2>Template</h2>
         <div class="template thumbnail">
-          <form class="form-horizontal" action="{{collection.href}}" >
+          <form class="form-horizontal" ng-submit="post()">
             <fieldset class="control-group" ng-repeat="field in collection.template.data">
               <label class="control-label" for='{{field.name}}'>{{field.name}}</label>
               <div class="controls">
-                <input id='{{field.name}}' value="{{field.value}}">
+                <input id='{{field.name}}' value="{{field.value}}" ng-model='field.value'>
               </div>
             </fieldset>
             <div class="control-group">
@@ -40,11 +40,34 @@
               <td>{{link.name}}</td>
               <td>{{link.prompt}}</td>
               <td>
-                <a href="" ng-click="get(link.href)">{{link.href}}</a>
+                <a href="" ng-click="goTo(link.href)">{{link.href}}</a>
               </td>
             </tr>
           </table>
         </div>
+
+        <h2>Items</h2>
+        <div class="items thumbnail">
+          <ul class="">
+            <li ng-repeat="item in collection.items">
+              <div class="item thumbnail">
+                <table class="table table-hover table-striped">
+                  <tr>
+                    <th>name</th>
+                    <th>prompt</th>
+                    <th>value</th>
+                  </tr>
+                  <tr class="data" ng-repeat="data in item.data">
+                    <td>{{data.name}}</td>
+                    <td>{{data.prompt}}</td>
+                    <td>{{data.value}}</td>
+                  </tr>
+                </table>
+              </div>
+            </li>
+          </ul>
+        </div>
+
       </div>
       <div class="span6">
         <h2>Raw response</h2>

@@ -1,24 +1,38 @@
 'use strict';
 
 function ApiController($scope, $http, $location) {
-  delete $http.defaults.headers.common['X-Requested-With']
 
-  $scope.get = function(path){
-    $http.get(path).success(function(data) {
-      $scope.collection = data.collection;
-      $scope.raw = JSON.stringify(data, undefined, 2)
+  $scope.goTo = function(path) {
+    $location.path(path)
+  }
 
-      $location.path(path)
-    })
+  $scope.post = function() {
+    var formData = {};
+    $scope.collection.template.data.forEach(function(f){ formData[f.name] = f.value })
+    $http.post($scope.collection.href, formData).success(successHandler)
   }
 
   $scope.$watch(function() {
     return $location.path()
-  }, function(path) {
-    $scope.get(path)
+  }, function(path, oldPath) {
+    if(path !== oldPath) get(path)
   });
 
-  $scope.get('/api')
+  get('/api')
+
+  // helpers
+
+  function get(path) {
+    $http.get(path).success(successHandler)
+  }
+
+  function successHandler(data) {
+    $scope.collection = data.collection;
+    $scope.raw = JSON.stringify(data, undefined, 2)
+
+    $location.path($scope.collection.href)
+  }
 }
+
 
 ApiController.$inject = ['$scope', '$http', '$location'];
