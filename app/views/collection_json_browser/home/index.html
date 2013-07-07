@@ -48,24 +48,64 @@
 
         <h2>Items</h2>
         <div class="items thumbnail">
-          <ul class="">
+          <ol class="">
             <li ng-repeat="item in collection.items">
-              <div class="item thumbnail">
+              <dl>
+                <dt>
+                  rel
+                </dt>
+                <dd>
+                  {{item.rel}}
+                </dd>
+                <dt>
+                  prompt
+                </dt>
+                <dd>
+                  {{item.prompt}}
+                </dd>
+                <dt>
+                  get
+                </dt>
+                <dd>
+                  <a href="" ng-click="goTo(item.href)">{{item.href}}</a>
+                </dd>
+              </dl>
+
+              <table class="table table-hover table-striped">
+                <tr>
+                  <th>name</th>
+                  <th>prompt</th>
+                  <th>value</th>
+                </tr>
+                <tr class="data" ng-repeat="data in item.data">
+                  <td>{{data.name}}</td>
+                  <td>{{data.prompt}}</td>
+                  <td>{{data.value}}</td>
+                </tr>
+              </table>
+
+              <h3>Links</h3>
+              <div class="item-links thumbnail">
                 <table class="table table-hover table-striped">
                   <tr>
+                    <th>rel</th>
                     <th>name</th>
                     <th>prompt</th>
-                    <th>value</th>
+                    <th>get</th>
                   </tr>
-                  <tr class="data" ng-repeat="data in item.data">
-                    <td>{{data.name}}</td>
-                    <td>{{data.prompt}}</td>
-                    <td>{{data.value}}</td>
+                  <tr ng-repeat="link in item.links">
+                    <td>{{link.rel}}</td>
+                    <td>{{link.name}}</td>
+                    <td>{{link.prompt}}</td>
+                    <td>
+                      <a href="" ng-click="goTo(link.href)">{{link.href}}</a>
+                    </td>
                   </tr>
                 </table>
               </div>
+
             </li>
-          </ul>
+          </ol>
         </div>
 
       </div>

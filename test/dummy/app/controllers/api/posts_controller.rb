@@ -49,14 +49,17 @@ module Api
               data: [
                 {
                   name: "title",
+                  prompt: "Post title",
                   value: params[:title]
                 },
                 {
                   name: "content",
+                  prompt: "Post content",
                   value: params[:content]
                 },
                 {
                   name: "category",
+                  prompt: "Post category",
                   value: params[:category]
                 }
               ],
