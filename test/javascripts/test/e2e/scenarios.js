@@ -11,39 +11,41 @@ describe('Collection JSON Browser', function() {
     expect(repeater('.links tr a').count()).toBe(2);
   });
 
-  describe('clicking on sign_in link', function(){
+  describe('clicking on posts link', function(){
     beforeEach(function() {
-      element(".links a:contains('sign_in')").click();
+      element(".links a:contains('posts')").click();
     });
 
     it('sets and displays browser location', function() {
-      expect(browser().location().url()).toBe('/api/sign_in');
-      expect(element("#href").val()).toEqual('/api/sign_in')
+      expect(browser().location().url()).toBe('/api/posts');
+      expect(element("#href").val()).toEqual('/api/posts')
       expect(repeater('.links tr a').count()).toBe(0);
     });
 
     it('displays a form when the response contains a template', function() {
-      expect(element("form[action='/api/sign_in']")).toBe()
-      expect(element("form input#email")).toBe()
-      expect(element("form input#password")).toBe()
-      expect(element("form input#provider").val()).toEqual('email')
+      expect(element("form[action='/api/posts']")).toBe()
+      expect(element("form input#title")).toBe()
+      expect(element("form input#content")).toBe()
+      expect(element("form input#category")).toBe()
       expect(element("form button[type=submit]")).toBe()
     });
 
     it('lists collection items when the form is submitted successfully', function(){
       //TODO: figure out how to test this
-      //input('field.value').enter('jake@example.com')
-      //input('field.value').enter('42')
-      element('#email').attr('value', 'jake@example.com')
-      element('#password').attr('value', '42')
+      //input('field.value').enter('Ruby and Angular')
+      //input('field.value').enter('Happily ever after')
+      //input('field.value').enter('ruby')
+      element('#title').attr('value', 'Ruby and Angular')
+      element('#content').attr('value', 'Happily ever after')
+      element('#category').attr('value', 'ruby')
 
       element("form button[type=submit]").click()
 
       expect(repeater('ul .item').count()).toBe(1);
 
-      expect(repeater("tr.data", "data").column('data.name')).toEqual(['token'])
-      expect(repeater("tr.data", "data").column('data.prompt')).toEqual(['Token'])
-      expect(repeater("tr.data", "data").column('data.value')).toEqual(['1yxS9h8CKxhaeuAUu73g'])
+      expect(repeater("tr.data", "data").column('data.name')).toEqual(['title'])
+      expect(repeater("tr.data", "data").column('data.prompt')).toEqual(['Title'])
+      expect(repeater("tr.data", "data").column('data.value')).toEqual(['Ruby and Angular'])
     })
   })
 
