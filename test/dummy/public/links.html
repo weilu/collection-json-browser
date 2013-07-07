@@ -1,0 +1,18 @@
+<div class="links thumbnail">
+  <table class="table table-hover table-striped">
+    <tr>
+      <th>rel</th>
+      <th>name</th>
+      <th>prompt</th>
+      <th>get</th>
+    </tr>
+    <tr ng-repeat="link in links">
+      <td>{{link.rel}}</td>
+      <td>{{link.name}}</td>
+      <td>{{link.prompt}}</td>
+      <td>
+        <a href="" ng-click="goTo(link.href)">{{link.href}}</a>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -18,16 +18,7 @@ function ApiController($scope, $http, $location) {
     if(path !== oldPath) get(path)
   });
 
-  get('/api')
-
-  // helpers
-
-  function get(path) {
-    $http.get(path).success(successHandler)
-  }
-
-  function successHandler(data, status) {
-    var links = data.collection.links
+  $scope.assignImagesAndLinks = function(links){
     if(links) {
       $scope.images = links.filter(function(link){
         return link.render === 'image'
@@ -39,7 +30,19 @@ function ApiController($scope, $http, $location) {
       $scope.images = undefined
       $scope.links = undefined
     }
+  }
 
+  get('/api')
+
+  // helpers
+
+  function get(path) {
+    $http.get(path).success(successHandler)
+  }
+
+  function successHandler(data, status) {
+    var links = data.collection.links
+    $scope.assignImagesAndLinks(links)
 
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)

@@ -51,10 +51,14 @@ describe('Collection JSON Browser', function() {
 
       expect(repeater('ol .item').count()).toBe(1);
 
-      var r = repeater("tr.data")
+      var data = repeater("tr.data")
       //expect(r.row(0)).toEqual(['title', 'Post title', 'Ruby and Angular'])
       //expect(r.row(1)).toEqual(['content', 'Post content', 'Happily ever after'])
-      expect(r.row(2)).toEqual(['category', 'Post category', 'ruby'])
+      expect(data.row(2)).toEqual(['category', 'Post category', 'ruby'])
+
+      var links = repeater(".links tr")
+      expect(links.row(1)).toEqual(['edit-form', 'post', 'Edit post', '/api/posts/1/edit'])
+      expect(links.row(2)).toEqual(['comments', 'comments', 'Comments', '/api/posts/1/comments'])
     })
   })
 

@@ -2,18 +2,22 @@
 
 describe('ApiController', function(){
   var scope, ctrl, location, $httpBackend;
+  var link = {
+    href: "/api/sign_in",
+    rel: "authentication",
+    name: "email",
+    prompt: "Sign in with email"
+  };
+  var image = {
+    href: "/assets/cat.gif",
+    rel: "My cat is cooler",
+    render: "image"
+  };
   var responseData = {
     collection: {
       version: "1.0",
       href: "/api",
-      links: [
-        {
-        href: "/api/sign_in",
-        rel: "authentication",
-        name: "email",
-        prompt: "Sign in with email"
-      }
-      ]
+      links: [ link, image ]
     }
   }
 
@@ -27,6 +31,19 @@ describe('ApiController', function(){
     ctrl = $controller(ApiController, {$scope: scope});
   }));
 
+  it('sets links from the collection links', function() {
+    expect(scope.links).toBeUndefined();
+    $httpBackend.flush();
+
+    expect(scope.links).toEqual([link]);
+  });
+
+  it('sets images from the collection links with render image', function() {
+    expect(scope.links).toBeUndefined();
+    $httpBackend.flush();
+
+    expect(scope.images).toEqual([image]);
+  });
 
   it('sets collection model from the collection', function() {
     expect(scope.collection).toBeUndefined();
@@ -34,7 +51,6 @@ describe('ApiController', function(){
 
     expect(scope.collection).toEqual(responseData.collection);
   });
-
 
   it('sets the raw model from response data', function() {
     expect(scope.raw).toBeUndefined();

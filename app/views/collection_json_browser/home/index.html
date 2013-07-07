@@ -27,38 +27,15 @@
         </div>
 
         <h2>Links</h2>
-        <div class="links thumbnail">
-          <table class="table table-hover table-striped">
-            <tr>
-              <th>rel</th>
-              <th>name</th>
-              <th>prompt</th>
-              <th>get</th>
-            </tr>
-            <tr ng-repeat="link in links">
-              <td>{{link.rel}}</td>
-              <td>{{link.name}}</td>
-              <td>{{link.prompt}}</td>
-              <td>
-                <a href="" ng-click="goTo(link.href)">{{link.href}}</a>
-              </td>
-            </tr>
-          </table>
-        </div>
+        <div ng-include src="'links.html'" onload="links"></div>
 
         <h2>Images</h2>
-        <ul ng-repeat="image in images" class="images unstyled row-fluid">
-          <li class="span3">
-            <div class="thumbnail">
-              <img ng-src={{image.href}} title={{image.rel}} width=150/>
-            </div>
-          </li>
-        </ul>
+        <div ng-include src="'images.html'" onload="images"></div>
 
         <h2>Items</h2>
         <div class="items thumbnail">
           <ol>
-            <li ng-repeat="item in collection.items" class="item">
+            <li ng-repeat="item in collection.items" class="item" ng-controller="ItemController">
               <dl>
                 <dt>
                   rel
@@ -94,25 +71,10 @@
               </table>
 
               <h3>Links</h3>
-              <div class="item-links thumbnail">
-                <table class="table table-hover table-striped">
-                  <tr>
-                    <th>rel</th>
-                    <th>name</th>
-                    <th>prompt</th>
-                    <th>get</th>
-                  </tr>
-                  <tr ng-repeat="link in item.links">
-                    <td>{{link.rel}}</td>
-                    <td>{{link.name}}</td>
-                    <td>{{link.prompt}}</td>
-                    <td>
-                      <a href="" ng-click="goTo(link.href)">{{link.href}}</a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+              <div ng-include src="'links.html'" onload="links"></div>
 
+              <h3>Images</h3>
+              <div ng-include src="'images.html'" onload="images"></div>
             </li>
           </ol>
         </div>
