@@ -32,20 +32,21 @@ describe('Collection JSON Browser', function() {
 
     it('lists collection items when the form is submitted successfully', function(){
       //TODO: figure out how to test this
-      //input('field.value').enter('Ruby and Angular')
-      //input('field.value').enter('Happily ever after')
-      //input('field.value').enter('ruby')
-      element('#title').attr('value', 'Ruby and Angular')
-      element('#content').attr('value', 'Happily ever after')
-      element('#category').attr('value', 'ruby')
+      input('field.value').enter('Ruby and Angular')
+      input('field.value').enter('Happily ever after')
+      input('field.value').enter('ruby')
+      //element('#title').attr('value', 'Ruby and Angular')
+      //element('#content').attr('value', 'Happily ever after')
+      //element('#category').attr('value', 'ruby')
 
       element("form button[type=submit]").click()
 
-      expect(repeater('ul .item').count()).toBe(1);
+      expect(repeater('ol .item').count()).toBe(1);
 
-      expect(repeater("tr.data", "data").column('data.name')).toEqual(['title'])
-      expect(repeater("tr.data", "data").column('data.prompt')).toEqual(['Title'])
-      expect(repeater("tr.data", "data").column('data.value')).toEqual(['Ruby and Angular'])
+      var r = repeater("tr.data")
+      //expect(r.row(0)).toEqual(['title', 'Post title', 'Ruby and Angular'])
+      //expect(r.row(1)).toEqual(['content', 'Post content', 'Happily ever after'])
+      expect(r.row(2)).toEqual(['category', 'Post category', 'ruby'])
     })
   })
 
