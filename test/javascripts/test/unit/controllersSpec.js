@@ -31,20 +31,6 @@ describe('ApiController', function(){
     ctrl = $controller(ApiController, {$scope: scope});
   }));
 
-  it('sets links from the collection links', function() {
-    expect(scope.links).toBeUndefined();
-    $httpBackend.flush();
-
-    expect(scope.links).toEqual([link]);
-  });
-
-  it('sets images from the collection links with render image', function() {
-    expect(scope.links).toBeUndefined();
-    $httpBackend.flush();
-
-    expect(scope.images).toEqual([image]);
-  });
-
   it('sets collection model from the collection', function() {
     expect(scope.collection).toBeUndefined();
     $httpBackend.flush();

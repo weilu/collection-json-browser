@@ -1,7 +1,6 @@
 'use strict';
 
 function ApiController($scope, $http, $location) {
-
   $scope.goTo = function(path) {
     $location.path(path)
   }
@@ -18,17 +17,17 @@ function ApiController($scope, $http, $location) {
     if(path !== oldPath) get(path)
   });
 
-  $scope.assignImagesAndLinks = function(links){
+  $scope.extractLinks = function(links){
+    console.log('extractLinks', arguments)
     if(links) {
-      $scope.images = links.filter(function(link){
-        return link.render === 'image'
-      })
-      $scope.links = links.filter(function(link){
-        return link.render !== 'image'
-      })
-    } else {
-      $scope.images = undefined
-      $scope.links = undefined
+      return links.filter(function(link){ return link.render !== 'image' })
+    }
+  }
+
+  $scope.extractImages = function(links){
+    console.log('extractImages', arguments)
+    if(links) {
+      return links.filter(function(link){ return link.render === 'image' })
     }
   }
 
@@ -37,13 +36,12 @@ function ApiController($scope, $http, $location) {
   // helpers
 
   function get(path) {
+    console.log('getting ', path)
     $http.get(path).success(successHandler)
   }
 
   function successHandler(data, status) {
-    var links = data.collection.links
-    $scope.assignImagesAndLinks(links)
-
+    console.log('success handler with', data, status)
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
     $scope.status = status
