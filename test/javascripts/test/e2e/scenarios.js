@@ -12,7 +12,7 @@ describe('Collection JSON Browser', function() {
   });
 
   it('displays 1 image', function() {
-    expect(repeater('.images img').count()).toBe(1);
+    expect(repeater('.links tr img').count()).toBe(1);
   });
 
   it('displays response status', function() {
@@ -56,7 +56,7 @@ describe('Collection JSON Browser', function() {
       //expect(r.row(1)).toEqual(['content', 'Post content', 'Happily ever after'])
       expect(data.row(2)).toEqual(['category', 'Post category', 'ruby'])
 
-      var links = repeater(".links tr")
+      var links = repeater(".item-links tr")
       expect(links.row(1)).toEqual(['edit-form', 'post', 'Edit post', '/api/posts/1/edit'])
       expect(links.row(2)).toEqual(['comments', 'comments', 'Comments', '/api/posts/1/comments'])
     })

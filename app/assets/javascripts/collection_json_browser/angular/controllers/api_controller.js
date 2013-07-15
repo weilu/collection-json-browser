@@ -17,31 +17,15 @@ function ApiController($scope, $http, $location) {
     if(path !== oldPath) get(path)
   });
 
-  $scope.extractLinks = function(links){
-    console.log('extractLinks', arguments)
-    if(links) {
-      return links.filter(function(link){ return link.render !== 'image' })
-    }
-  }
-
-  $scope.extractImages = function(links){
-    console.log('extractImages', arguments)
-    if(links) {
-      return links.filter(function(link){ return link.render === 'image' })
-    }
-  }
-
   get('/api')
 
   // helpers
 
   function get(path) {
-    console.log('getting ', path)
     $http.get(path).success(successHandler)
   }
 
   function successHandler(data, status) {
-    console.log('success handler with', data, status)
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
     $scope.status = status

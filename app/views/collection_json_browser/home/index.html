@@ -29,11 +29,19 @@
         </div>
 
         <div ng-show="collection.links">
-          <h2>Links</h2>
-          <div ng-include src="'links.html'" onload="links=extractLinks(collection.links)"></div>
-
-          <h2>Images</h2>
-          <div ng-include src="'images.html'" onload="images=extractImages(collection.links)"></div>
+          <h2>Links & Images</h2>
+          <div class="links thumbnail">
+            <table class="table table-hover table-striped">
+              <tr>
+                <th>rel</th>
+                <th>name</th>
+                <th>prompt</th>
+                <th>get</th>
+              </tr>
+              <tr ng-include src="'links.html'" ng-repeat="link in collection.links">
+              </tr>
+            </table>
+          </div>
         </div>
 
         <div ng-show="collection.items">
@@ -75,11 +83,21 @@
                   </tr>
                 </table>
 
-                <h3>Links</h3>
-                <div ng-include src="'links.html'" onload="links=extractLinks(item.links)"></div>
-
-                <h3>Images</h3>
-                <div ng-include src="'images.html'" onload="images=extractImages(item.links)"></div>
+                <div ng-show="item.links">
+                  <h3>Links & Images</h3>
+                  <div class="item-links thumbnail">
+                    <table class="table table-hover table-striped">
+                      <tr>
+                        <th>rel</th>
+                        <th>name</th>
+                        <th>prompt</th>
+                        <th>get</th>
+                      </tr>
+                      <tr ng-include src="'links.html'" ng-repeat="link in item.links">
+                      </tr>
+                    </table>
+                  </div>
+                </div>
               </li>
             </ol>
           </div>
