@@ -1,14 +1,13 @@
 'use strict';
 
 function ApiController($scope, $http, $location) {
-  $scope.goTo = function(path) {
+  $scope.goTo = function(path, fromRel) {
+    $scope.fromRel = fromRel
     $location.path(path)
   }
 
-  $scope.post = function() {
-    var formData = {};
-    $scope.collection.template.data.forEach(function(f){ formData[f.name] = f.value })
-    $http.post($scope.collection.href, formData).success(successHandler)
+  $scope.submit = function() {
+    $scope.fromRel === 'edit-form' ? put() : post()
   }
 
   $scope.$watch(function() {
@@ -23,6 +22,20 @@ function ApiController($scope, $http, $location) {
 
   function get(path) {
     $http.get(path).success(successHandler)
+  }
+
+  function post() {
+    $http.post($scope.collection.href, formData()).success(successHandler)
+  }
+
+  function put() {
+    $http.put($scope.collection.href, formData()).success(successHandler)
+  }
+
+  function formData() {
+    var data = {};
+    $scope.collection.template.data.forEach(function(f){ data[f.name] = f.value })
+    return data
   }
 
   function successHandler(data, status) {
