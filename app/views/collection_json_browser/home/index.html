@@ -38,7 +38,14 @@
                 <th>prompt</th>
                 <th>get</th>
               </tr>
-              <tr ng-include src="'links.html'" ng-repeat="link in collection.links">
+              <tr ng-repeat="link in collection.links">
+                <td>{{link.rel}}</td>
+                <td>{{link.name}}</td>
+                <td>{{link.prompt}}</td>
+                <td ng-switch on="link.render">
+                  <img ng-switch-when="image" ng-src={{link.href}} title={{link.rel}} width=150/>
+                  <a ng-switch-default href="" ng-click="goTo(link.href)">{{link.href}}</a>
+                </td>
               </tr>
             </table>
           </div>
@@ -93,7 +100,14 @@
                         <th>prompt</th>
                         <th>get</th>
                       </tr>
-                      <tr ng-include src="'links.html'" ng-repeat="link in item.links">
+                      <tr ng-repeat="link in item.links">
+                        <td>{{link.rel}}</td>
+                        <td>{{link.name}}</td>
+                        <td>{{link.prompt}}</td>
+                        <td ng-switch on="link.render">
+                          <img ng-switch-when="image" ng-src={{link.href}} title={{link.rel}} width=150/>
+                          <a ng-switch-default href="" ng-click="goTo(link.href)">{{link.href}}</a>
+                        </td>
                       </tr>
                     </table>
                   </div>
