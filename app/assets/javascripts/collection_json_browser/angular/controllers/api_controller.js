@@ -21,15 +21,19 @@ function ApiController($scope, $http, $location) {
   // helpers
 
   function get(path) {
-    $http.get(path).success(successHandler)
+    $http.get(path).success(responseHandler)
   }
 
   function post() {
-    $http.post($scope.collection.href, formData()).success(successHandler)
+    $http.post($scope.collection.href, formData()).
+      success(responseHandler).
+      error(responseHandler)
   }
 
   function put() {
-    $http.put($scope.collection.href, formData()).success(successHandler)
+    $http.put($scope.collection.href, formData()).
+      success(responseHandler).
+      error(responseHandler)
   }
 
   function formData() {
@@ -38,7 +42,7 @@ function ApiController($scope, $http, $location) {
     return data
   }
 
-  function successHandler(data, status) {
+  function responseHandler(data, status) {
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
     $scope.status = status
