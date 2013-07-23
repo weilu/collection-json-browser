@@ -21,16 +21,19 @@ function ApiController($scope, $http, $location) {
   // helpers
 
   function get(path) {
-    $http.get(path).success(responseHandler)
+    $scope.loading = true
+    $http.get(path).success(responseHandler).error(function(){ $scope.loading = false })
   }
 
   function post() {
+    $scope.loading = true
     $http.post($scope.collection.href, formData()).
       success(responseHandler).
       error(responseHandler)
   }
 
   function put() {
+    $scope.loading = true
     $http.put($scope.collection.href, formData()).
       success(responseHandler).
       error(responseHandler)
@@ -46,6 +49,7 @@ function ApiController($scope, $http, $location) {
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
     $scope.status = status
+    $scope.loading = false
 
     $location.path($scope.collection.href)
   }

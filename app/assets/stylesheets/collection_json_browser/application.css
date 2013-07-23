@@ -10,3 +10,9 @@
  *
  *= require ./bootstrap
  */
+
+.spinner.modal {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
