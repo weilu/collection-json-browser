@@ -1,6 +1,8 @@
 'use strict';
 
 function ApiController($scope, $http, $location) {
+  $scope.rootUrl = '/api'
+
   $scope.goTo = function(url, fromRel) {
     $scope.fromRel = fromRel
     $location.url(url)
@@ -16,9 +18,9 @@ function ApiController($scope, $http, $location) {
     if(url !== oldUrl) {
       get(url)
     }
-  });
+  })
 
-  get('/api')
+  get($scope.rootUrl)
 
   // helpers
 

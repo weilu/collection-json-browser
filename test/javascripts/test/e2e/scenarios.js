@@ -60,6 +60,11 @@ describe('Collection JSON Browser', function() {
       expect(links.row(1)).toEqual(['edit-form', 'post', 'Edit post', '/api/posts/1/edit'])
       expect(links.row(2)).toEqual(['comments', 'comments', 'Comments', '/api/posts/1/comments'])
     })
+
+    it('displays a link to home', function() {
+      element('.nav a').click()
+      expect(browser().location().url()).toBe('/api');
+    });
   })
 
 });
