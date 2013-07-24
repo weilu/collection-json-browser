@@ -1,9 +1,9 @@
 'use strict';
 
 function ApiController($scope, $http, $location) {
-  $scope.goTo = function(path, fromRel) {
+  $scope.goTo = function(url, fromRel) {
     $scope.fromRel = fromRel
-    $location.path(path)
+    $location.url(url)
   }
 
   $scope.submit = function() {
@@ -11,18 +11,20 @@ function ApiController($scope, $http, $location) {
   }
 
   $scope.$watch(function() {
-    return $location.path()
-  }, function(path, oldPath) {
-    if(path !== oldPath) get(path)
+    return $location.url()
+  }, function(url, oldUrl) {
+    if(url !== oldUrl) {
+      get(url)
+    }
   });
 
   get('/api')
 
   // helpers
 
-  function get(path) {
+  function get(url) {
     $scope.loading = true
-    $http.get(path).success(responseHandler).error(function(){ $scope.loading = false })
+    $http.get(url).success(responseHandler).error(function(){ $scope.loading = false })
   }
 
   function post() {
@@ -51,7 +53,10 @@ function ApiController($scope, $http, $location) {
     $scope.status = status
     $scope.loading = false
 
-    $location.path($scope.collection.href)
+    var collectionHref = $scope.collection.href
+    if(collectionHref !== $location.path() && collectionHref.match(/^http/) === null) {
+      $location.url(collectionHref)
+    }
   }
 }
 
