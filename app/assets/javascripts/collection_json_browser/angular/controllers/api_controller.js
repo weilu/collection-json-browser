@@ -12,6 +12,8 @@ function ApiController($scope, $http, $location) {
     $scope.fromRel === 'edit-form' ? put() : post()
   }
 
+  $scope.destroy = destroy
+
   get($scope.rootUrl)
 
   // helpers
@@ -22,6 +24,13 @@ function ApiController($scope, $http, $location) {
       responseHandler(data, status)
       $location.url(url)
     }).error(function(){ $scope.loading = false })
+  }
+
+  function destroy(url) {
+    $scope.loading = true
+    $http.delete(url).
+      success(responseHandler).
+      error(responseHandler)
   }
 
   function post() {
@@ -51,6 +60,5 @@ function ApiController($scope, $http, $location) {
     $scope.loading = false
   }
 }
-
 
 ApiController.$inject = ['$scope', '$http', '$location'];

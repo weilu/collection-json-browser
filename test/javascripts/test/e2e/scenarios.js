@@ -38,7 +38,21 @@ describe('Collection JSON Browser', function() {
       expect(element("form button[type=submit]")).toBe()
     });
 
-    it('lists collection items when the form is submitted successfully', function(){
+    describe('lists items', function() {
+      it('lists alls', function() {
+        expect(repeater('ol .item').count()).toBe(2);
+      })
+
+      it('lists items with their respective GET links', function() {
+        expect(element('ol .item dl dd.get a').text()).toEqual('/api/posts/1/api/posts/2')
+      })
+
+      it('lists items with their respective DELETE links', function() {
+        expect(element('ol .item dl dd.delete a').text()).toEqual('delete /api/posts/1delete /api/posts/2')
+      })
+    })
+
+    it('list the created item under collection items when the form is submitted successfully', function(){
       //TODO: figure out how to test this
       input('field.value').enter('Ruby and Angular')
       input('field.value').enter('Happily ever after')

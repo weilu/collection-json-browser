@@ -34,6 +34,7 @@ describe('ApiController', function(){
     $httpBackend.when('GET', '/api/posts').respond(responseData);
     $httpBackend.when('POST', '/api').respond(responseData);
     $httpBackend.when('PUT', '/api').respond(responseData);
+    $httpBackend.when('DELETE', '/api/posts/1').respond(responseData);
 
     scope = $rootScope.$new();
     location = $location;
@@ -79,9 +80,11 @@ describe('ApiController', function(){
   })
 
   describe('#submit', function(){
-    it('post the form when fromRel is not edit-form', function(){
+    beforeEach(function(){
       scope.collection = responseData.collection
+    })
 
+    it('post the form when fromRel is not edit-form', function(){
       $httpBackend.expectPOST('/api')
 
       scope.fromRel = 'some-stuff'
@@ -91,12 +94,20 @@ describe('ApiController', function(){
     })
 
     it('put the form when fromRel is edit-form', function(){
-      scope.collection = responseData.collection
-
       $httpBackend.expectPUT('/api')
 
       scope.fromRel = 'edit-form'
       scope.submit()
+
+      $httpBackend.flush()
+    })
+  })
+
+  describe('#destroy', function(){
+    it('deletes the resource', function(){
+      $httpBackend.expectDELETE('/api/posts/1')
+
+      scope.destroy('/api/posts/1')
 
       $httpBackend.flush()
     })

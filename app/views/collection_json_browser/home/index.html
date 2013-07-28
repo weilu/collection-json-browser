@@ -88,8 +88,14 @@
                   <dt>
                     get
                   </dt>
-                  <dd>
+                  <dd class="get">
                     <a href="" ng-click="goTo(item.href)">{{item.href}}</a>
+                  </dd>
+                  <dt>
+                    delete
+                  </dt>
+                  <dd class="delete">
+                    <a href="" ng-click="destroy(item.href)">delete {{item.href}}</a>
                   </dd>
                 </dl>
 
