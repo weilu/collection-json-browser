@@ -31,6 +31,7 @@ describe('ApiController', function(){
     $httpBackend = _$httpBackend_;
     var root = "http://localhost:3000"
     $httpBackend.when('GET', '/api').respond(responseData);
+    $httpBackend.when('GET', '/api/posts').respond(responseData);
     $httpBackend.when('POST', '/api').respond(responseData);
     $httpBackend.when('PUT', '/api').respond(responseData);
 
@@ -62,7 +63,7 @@ describe('ApiController', function(){
 
   describe('#goTo', function(){
     beforeEach(function(){
-      spyOn(location, 'path')
+      spyOn(location, 'url')
     })
 
     it('stores fromRel', function(){
@@ -72,7 +73,8 @@ describe('ApiController', function(){
 
     it('sets location path', function(){
       scope.goTo('/api/posts', 'some-rel')
-      expect(location.path).toHaveBeenCalledWith('/api/posts')
+      $httpBackend.flush();
+      expect(location.url).toHaveBeenCalledWith('/api/posts')
     })
   })
 
