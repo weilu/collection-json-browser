@@ -29,7 +29,7 @@ module Api
               {
                 name: "category",
                 value: "",
-                options: ['ruby', 'javascript']
+                array: ['ruby', 'javascript']
               }
             ]
           },

@@ -31,11 +31,10 @@ describe('Collection JSON Browser', function() {
     });
 
     it('displays a form when the response contains a template', function() {
-      expect(element("form[action='/api/posts']")).toBe()
-      expect(element("form input#title")).toBe()
-      expect(element("form input#content")).toBe()
-      expect(element("form input#category")).toBe()
-      expect(element("form button[type=submit]")).toBe()
+      expect(element("form input#title").count()).toEqual(1)
+      expect(element("form input#content").count()).toEqual(1)
+      expect(element("form select#category").count()).toEqual(1)
+      expect(element("form button[type=submit]").count()).toEqual(1)
     });
 
     describe('lists items', function() {
@@ -56,7 +55,7 @@ describe('Collection JSON Browser', function() {
       //TODO: figure out how to test this
       input('field.value').enter('Ruby and Angular')
       input('field.value').enter('Happily ever after')
-      input('field.value').enter('ruby')
+      select('field.value').option('ruby')
       //element('#title').attr('value', 'Ruby and Angular')
       //element('#content').attr('value', 'Happily ever after')
       //element('#category').attr('value', 'ruby')

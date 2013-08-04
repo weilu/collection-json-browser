@@ -31,8 +31,10 @@
             <form class="form-horizontal" ng-submit="submit()">
               <fieldset class="control-group" ng-repeat="field in collection.template.data">
                 <label class="control-label" for='{{field.name}}'>{{field.name}}</label>
-                <div class="controls">
-                  <input id='{{field.name}}' value="{{field.value}}" ng-model='field.value'>
+                <div class="controls" ng-switch on="field.array">
+                  <input ng-switch-when="undefined" id='{{field.name}}' value="{{field.value}}" ng-model='field.value'>
+                  <select ng-switch-default id='{{field.name}}' value="{{field.value}}" ng-model='field.value' ng-options="option for option in field.array">
+                  </select>
                 </div>
               </fieldset>
               <div class="control-group">
