@@ -33,7 +33,7 @@ describe('ApiController', function(){
     $httpBackend.when('GET', '/api').respond(responseData);
     $httpBackend.when('GET', '/api/posts').respond(responseData);
     $httpBackend.when('POST', '/api').respond(responseData);
-    $httpBackend.when('PUT', '/api').respond(responseData);
+    $httpBackend.when('PUT', '/api/posts/1').respond(responseData);
     $httpBackend.when('DELETE', '/api/posts/1').respond(responseData);
 
     scope = $rootScope.$new();
@@ -94,7 +94,8 @@ describe('ApiController', function(){
     })
 
     it('put the form when fromRel is edit-form', function(){
-      $httpBackend.expectPUT('/api')
+      $httpBackend.expectPUT('/api/posts/1')
+      spyOn(location, 'url').andReturn('/api/posts/1')
 
       scope.fromRel = 'edit-form'
       scope.submit()
