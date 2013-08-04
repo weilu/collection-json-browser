@@ -94,8 +94,8 @@ describe('ApiController', function(){
     })
 
     it('put the form when fromRel is edit-form', function(){
-      $httpBackend.expectPUT('/api/posts/1')
       spyOn(location, 'url').andReturn('/api/posts/1')
+      $httpBackend.expectPUT('/api/posts/1')
 
       scope.fromRel = 'edit-form'
       scope.submit()
