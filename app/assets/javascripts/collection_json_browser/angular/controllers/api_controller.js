@@ -14,6 +14,13 @@ function ApiController($scope, $http, $location) {
 
   $scope.destroy = destroy
 
+  $scope.$watch(function() {
+    return $location.url();
+  }, function(url, oldUrl) {
+    if(url !== oldUrl)
+      get(url)
+  });
+
   get($scope.rootUrl)
 
   // helpers
