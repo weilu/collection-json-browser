@@ -37,6 +37,14 @@
                   </select>
                 </div>
               </fieldset>
+              <div ng-show="collection.items">
+                <fieldset class="control-group">
+                  <label class="control-label" for="item-to-update">item to update</label>
+                  <div class="controls">
+                    <select id='item-to-updat' ng-model='item' ng-options="option.value as option.name for option in itemPaths"></select>
+                  </div>
+                </fieldset>
+              </div>
               <div class="control-group">
                 <div class="controls">
                   <button type="submit" class="btn">Submit</button>

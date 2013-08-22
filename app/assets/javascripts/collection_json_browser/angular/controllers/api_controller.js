@@ -56,13 +56,24 @@ function ApiController($scope, $http, $location) {
 
   function formData() {
     var data = {};
-    $scope.collection.template.data.forEach(function(f){ data[f.name] = f.value })
+    $scope.collection.template.data.forEach(function(f) {
+      data[f.name] = f.value
+    })
     return data
   }
 
   function responseHandler(data, status) {
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
+
+    var items = data.collection.items
+    $scope.itemPaths = [{ name: "-- None (POST create) --", value: ''}]
+    if(items)
+      items.forEach(function(i){
+        $scope.itemPaths.push({name: i.href, value: i.href})
+      })
+    $scope.item = ""
+
     $scope.status = status
     $scope.loading = false
   }

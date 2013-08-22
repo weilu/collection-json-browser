@@ -13,17 +13,32 @@ describe('ApiController', function(){
     rel: "My cat is cooler",
     render: "image"
   };
+
   var responseData = {
     collection: {
       version: "1.0",
       href: "/api",
       links: [ link, image ],
+      items: [ getItem(1), getItem(2) ],
       template: {
         data: [
           {name: ''},
           {age: 2}
         ]
       }
+    }
+  }
+
+  function getItem(i){
+    return {
+      href: "/api/posts/" + i,
+      rel: "post",
+      prompt: "Post",
+      data: [{
+        name: "title",
+        prompt: "Post title",
+        value: "awesome post " + i
+      }]
     }
   }
 
@@ -53,6 +68,21 @@ describe('ApiController', function(){
     $httpBackend.flush();
 
     expect(JSON.parse(scope.raw)).toEqual(responseData);
+  });
+
+  it('sets the itemPaths from response data', function() {
+    expect(scope.itemPaths).toBeUndefined();
+    $httpBackend.flush();
+
+    var href1 = getItem(1).href
+    var href2 = getItem(2).href
+    expect(scope.itemPaths).toEqual(
+      [
+        {name: "-- None (POST create) --", value: ""},
+        {name: href1, value: href1},
+        {name: href2, value: href2}
+      ]
+    );
   });
 
   it('sets location path', function(){
