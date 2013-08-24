@@ -25,11 +25,11 @@
           <input id='href' value="{{collection.href}}">
         </div>
 
-        <div ng-show="collection.template">
+        <div ng-show="template">
           <h2>Template</h2>
           <div class="template thumbnail">
             <form class="form-horizontal" ng-submit="submit()">
-              <fieldset class="control-group" ng-repeat="field in collection.template.data">
+              <fieldset class="control-group" ng-repeat="field in template">
                 <label class="control-label" for='{{field.name}}'>{{field.name}}</label>
                 <div class="controls" ng-switch on="field.array">
                   <input ng-switch-when="undefined" id='{{field.name}}' value="{{field.value}}" ng-model='field.value'>

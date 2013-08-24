@@ -21,14 +21,25 @@ function ApiController($scope, $http, $location) {
       get(url)
   });
 
+  $scope.$watch(function() {
+    return $scope.item;
+  }, function(item, oldItem) {
+    if(item != oldItem)
+      getTemplate(item)
+  });
+
   get($scope.rootUrl)
 
   // helpers
 
-  function get(url) {
+  function get(url, successHandler) {
     $scope.loading = true
+
+    if(successHandler === undefined)
+      successHandler = responseHandler
+
     $http.get(url).success(function(data, status){
-      responseHandler(data, status)
+      successHandler(data, status)
       $location.url(url)
     }).error(responseHandler)
   }
@@ -66,6 +77,8 @@ function ApiController($scope, $http, $location) {
     $scope.collection = data.collection;
     $scope.raw = JSON.stringify(data, undefined, 2)
 
+    setTemplate(data)
+
     var items = data.collection.items
     $scope.itemPaths = [{ name: "-- None (POST create) --", value: ''}]
     if(items)
@@ -76,6 +89,24 @@ function ApiController($scope, $http, $location) {
 
     $scope.status = status
     $scope.loading = false
+  }
+
+  function getTemplate(item) {
+    if(item === undefined || item == '') {
+      //TODO
+      //empty fields
+      //post
+    } else {
+      get(item, setTemplate)
+      //TODO
+      //put
+    }
+  }
+
+  function setTemplate(data){
+    if(data.collection.template) {
+      $scope.template = data.collection.template.data
+    }
   }
 }
 

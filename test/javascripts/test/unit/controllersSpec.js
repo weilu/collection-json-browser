@@ -22,8 +22,15 @@ describe('ApiController', function(){
       items: [ getItem(1), getItem(2) ],
       template: {
         data: [
-          {name: ''},
-          {age: 2}
+          {
+            name: "title",
+            prompt: "Post title",
+            value: ""
+          },
+          {
+            name: "tag",
+            value: ""
+          },
         ]
       }
     }
@@ -69,6 +76,32 @@ describe('ApiController', function(){
 
     expect(JSON.parse(scope.raw)).toEqual(responseData);
   });
+
+  describe('template', function(){
+    var t;
+    beforeEach(function(){
+      t = responseData.collection.template
+    })
+
+    it('sets the template from response data', function() {
+      expect(scope.template).toBeUndefined();
+      $httpBackend.flush();
+
+      expect(scope.template).toEqual(responseData.collection.template.data);
+    });
+
+    it('assigns undefined when response data does not contain template', function() {
+      responseData.collection.template = undefined
+      expect(scope.template).toBeUndefined();
+      $httpBackend.flush();
+
+      expect(scope.template).toBeUndefined();
+    });
+
+    afterEach(function(){
+      responseData.collection.template = t
+    })
+  })
 
   it('sets the itemPaths from response data', function() {
     expect(scope.itemPaths).toBeUndefined();
