@@ -92,7 +92,7 @@ describe('ApiController', function(){
 
     it('assigns undefined when response data does not contain template', function() {
       responseData.collection.template = undefined
-      expect(scope.template).toBeUndefined();
+      scope.template = t
       $httpBackend.flush();
 
       expect(scope.template).toBeUndefined();

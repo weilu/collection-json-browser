@@ -107,6 +107,8 @@ function ApiController($scope, $http, $location) {
   function setTemplate(data){
     if(data.collection.template) {
       $scope.template = data.collection.template.data
+    } else {
+      $scope.template = undefined
     }
   }
 }
