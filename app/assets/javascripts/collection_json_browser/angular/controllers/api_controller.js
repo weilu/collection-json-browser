@@ -30,7 +30,9 @@ function ApiController($scope, $http, $location) {
     $http.get(url).success(function(data, status){
       responseHandler(data, status)
       $location.url(url)
-    }).error(function(){ $scope.loading = false })
+    }).error(function(data, status){
+      successHandler(data, status)
+    })
   }
 
   function destroy(url) {
