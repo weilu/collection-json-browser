@@ -60,7 +60,7 @@ function ApiController($scope, $http, $location) {
 
   function put() {
     $scope.loading = true
-    $http.put($location.url(), formData()).
+    $http.put($scope.collection.items[0].href, formData()).
       success(responseHandler).
       error(responseHandler)
   }
