@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    collection-json-browser (0.0.7)
+    collection-json-browser (0.0.9)
       rails (~> 3.2.13)
 
 GEM
