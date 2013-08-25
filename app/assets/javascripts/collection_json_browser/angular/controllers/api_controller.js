@@ -60,14 +60,15 @@ function ApiController($scope, $http, $location) {
 
   function put() {
     $scope.loading = true
-    $http.put($location.url(), formData()).
+    var href = $scope.collection.items[0].href
+    $http.put(href, formData()).
       success(responseHandler).
       error(responseHandler)
   }
 
   function formData() {
     var data = {};
-    $scope.collection.template.data.forEach(function(f) {
+    $scope.template.forEach(function(f) {
       data[f.name] = f.value
     })
     return data
