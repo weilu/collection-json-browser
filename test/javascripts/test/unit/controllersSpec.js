@@ -18,12 +18,26 @@ describe('ApiController', function(){
       version: "1.0",
       href: "/api",
       links: [ link, image ],
+      items: [ getItem(1), getItem(2) ],
       template: {
         data: [
           {name: ''},
           {age: 2}
         ]
       }
+    }
+  }
+
+  function getItem(i){
+    return {
+      href: "/api/posts/" + i,
+      rel: "post",
+      prompt: "Post",
+      data: [{
+        name: "title",
+        prompt: "Post title",
+        value: "awesome post " + i
+      }]
     }
   }
 
@@ -87,6 +101,7 @@ describe('ApiController', function(){
     it('post the form when fromRel is not edit-form', function(){
       $httpBackend.expectPOST('/api')
 
+      scope.template = responseData.collection.template.data
       scope.fromRel = 'some-stuff'
       scope.submit()
 
@@ -94,9 +109,9 @@ describe('ApiController', function(){
     })
 
     it('put the form when fromRel is edit-form', function(){
-      spyOn(location, 'url').andReturn('/api/posts/1')
       $httpBackend.expectPUT('/api/posts/1')
 
+      scope.template = responseData.collection.template.data
       scope.fromRel = 'edit-form'
       scope.submit()
 
