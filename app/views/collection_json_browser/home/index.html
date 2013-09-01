@@ -29,10 +29,10 @@
           <h2>Template</h2>
           <div class="template thumbnail">
             <form class="form-horizontal" ng-submit="submit()">
-              <fieldset class="control-group" ng-repeat="field in template">
+              <fieldset class="control-group field" ng-repeat="field in template">
                 <label class="control-label" for='{{field.name}}'>{{field.name}}</label>
                 <div class="controls" ng-switch on="field.array">
-                  <input ng-switch-when="undefined" id='{{field.name}}' value="{{field.value}}" ng-model='field.value'>
+                  <input ng-switch-when="undefined" class="field-input" id='{{field.name}}' value="{{field.value}}" ng-model='field.value'>
                   <select ng-switch-default id='{{field.name}}' value="{{field.value}}" ng-model='field.value' ng-options="option for option in field.array">
                   </select>
                 </div>

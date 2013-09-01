@@ -1,6 +1,34 @@
 'use strict';
 
-/* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
+//helper functions from https://github.com/tomazy/angular-quiz/blob/master/test/e2e/lib/ng-scenario-dsl-ext.coffee
+var msie = parseInt((/msie (\d+)/.exec(navigator.userAgent.toLowerCase()) || [])[1], 10);
+
+angular.scenario.dsl('modelInput', angular.scenario.dsl['input']);
+angular.scenario.dsl('input', function() {
+  var chain, supportInputEvent;
+  chain = {};
+  supportInputEvent = 'oninput' in document.createElement('div') && msie !== 9;
+  chain.enter = function(value, event) {
+    return this.addFutureAction("input '" + this.label + "' enter '" + value + "'", function($window, $document, done) {
+      var input;
+      input = $document.elements().filter(':input');
+      input.val(value);
+      input.trigger(event || (supportInputEvent ? 'input' : 'change'));
+      return done();
+    });
+  };
+  chain.val = function() {
+    return this.addFutureAction("return input val", function($window, $document, done) {
+      var input;
+      input = $document.elements().filter(':input');
+      return done(null, input.val());
+    });
+  };
+  return function(selector, label) {
+    this.dsl.using(selector, label);
+    return chain;
+  };
+});
 
 describe('Collection JSON Browser', function() {
   beforeEach(function() {
@@ -22,6 +50,11 @@ describe('Collection JSON Browser', function() {
   describe('clicking on posts link', function(){
     beforeEach(function() {
       element(".links a:contains('posts')").click();
+    });
+
+    it('displays a link to home', function() {
+      element('.nav a').click()
+      expect(browser().location().url()).toBe('/api');
     });
 
     it('sets and displays browser location', function() {
@@ -51,33 +84,28 @@ describe('Collection JSON Browser', function() {
       })
     })
 
-    it('list the created item under collection items when the form is submitted successfully', function(){
-      //TODO: figure out how to test this
-      input('field.value').enter('Ruby and Angular')
-      input('field.value').enter('Happily ever after')
-      select('field.value').option('ruby')
-      //element('#title').attr('value', 'Ruby and Angular')
-      //element('#content').attr('value', 'Happily ever after')
-      //element('#category').attr('value', 'ruby')
+    describe('form', function() {
+      describe('creating an item', function() {
+        it('list the created item under collection items when the form is submitted successfully', function(){
 
-      element("form button[type=submit]").click()
+          input('#title').enter('Ruby and Angular')
+          input('#content').enter('Happily ever after')
+          select('field.value').option('ruby')
 
-      expect(repeater('ol .item').count()).toBe(1);
+          element("form button[type=submit]").click()
 
-      var data = repeater("tr.data")
-      //expect(r.row(0)).toEqual(['title', 'Post title', 'Ruby and Angular'])
-      //expect(r.row(1)).toEqual(['content', 'Post content', 'Happily ever after'])
-      expect(data.row(2)).toEqual(['category', 'Post category', 'ruby'])
+          expect(repeater('ol .item').count()).toBe(1);
 
-      var links = repeater(".item-links tr")
-      expect(links.row(1)).toEqual(['edit-form', 'post', 'Edit post', '/api/posts/1/edit'])
-      expect(links.row(2)).toEqual(['comments', 'comments', 'Comments', '/api/posts/1/comments'])
+          var data = repeater("tr.data")
+          expect(data.row(0)).toEqual(['title', 'Post title', 'Ruby and Angular'])
+          expect(data.row(1)).toEqual(['content', 'Post content', 'Happily ever after'])
+          expect(data.row(2)).toEqual(['category', 'Post category', 'ruby'])
+
+          var links = repeater(".item-links tr")
+          expect(links.row(1)).toEqual(['edit-form', 'post', 'Edit post', '/api/posts/1/edit'])
+          expect(links.row(2)).toEqual(['comments', 'comments', 'Comments', '/api/posts/1/comments'])
+        })
+      })
     })
-
-    it('displays a link to home', function() {
-      element('.nav a').click()
-      expect(browser().location().url()).toBe('/api');
-    });
   })
-
 });
