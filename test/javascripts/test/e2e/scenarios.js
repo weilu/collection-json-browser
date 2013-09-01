@@ -1,19 +1,15 @@
 'use strict';
 
 //helper functions from https://github.com/tomazy/angular-quiz/blob/master/test/e2e/lib/ng-scenario-dsl-ext.coffee
-var msie = parseInt((/msie (\d+)/.exec(navigator.userAgent.toLowerCase()) || [])[1], 10);
-
 angular.scenario.dsl('modelInput', angular.scenario.dsl['input']);
 angular.scenario.dsl('input', function() {
-  var chain, supportInputEvent;
-  chain = {};
-  supportInputEvent = 'oninput' in document.createElement('div') && msie !== 9;
+  var chain = {};
   chain.enter = function(value, event) {
     return this.addFutureAction("input '" + this.label + "' enter '" + value + "'", function($window, $document, done) {
       var input;
       input = $document.elements().filter(':input');
       input.val(value);
-      input.trigger(event || (supportInputEvent ? 'input' : 'change'));
+      input.trigger(event || 'input');
       return done();
     });
   };
@@ -26,6 +22,50 @@ angular.scenario.dsl('input', function() {
   };
   return function(selector, label) {
     this.dsl.using(selector, label);
+    return chain;
+  };
+});
+
+angular.scenario.dsl('modelSelect', angular.scenario.dsl['select']);
+angular.scenario.dsl('select', function() {
+  var chain = {};
+  chain.option = function(value) {
+    return this.addFutureAction("select '" + this.name + "' option '" + value + "'", function($window, $document, done) {
+      var select = $document.elements();
+      var option = select.find('option[value="' + value + '"]');
+      if (option.length) {
+        select.val(value);
+      } else {
+        option = select.find('option').filter(function(){
+          return this.text === value;
+        });
+        if (!option.length) {
+          option = select.find('option:contains("' + value + '")');
+        }
+        if (option.length) {
+          select.val(option.val());
+        } else {
+            return done("option '" + value + "' not found");
+        }
+      }
+      select.trigger('change');
+      done();
+    });
+  };
+
+  chain.options = function() {
+    var values = arguments;
+    return this.addFutureAction("select '" + this.name + "' options '" + values + "'", function($window, $document, done) {
+      var select = $document.elements();
+      select.val(values);
+      select.trigger('change');
+      done();
+    });
+  };
+
+  return function(selector) {
+    this.name = selector;
+    this.dsl.using(selector);
     return chain;
   };
 });
@@ -90,7 +130,7 @@ describe('Collection JSON Browser', function() {
 
           input('#title').enter('Ruby and Angular')
           input('#content').enter('Happily ever after')
-          select('field.value').option('ruby')
+          select('#category').option('ruby')
 
           element("form button[type=submit]").click()
 
