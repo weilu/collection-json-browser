@@ -4,6 +4,13 @@ module Api
       render json: new_post
     end
 
+    def show
+      id = params[:id].to_i
+      render json: new_post(title: "title #{id}",
+                            content: "content #{id}",
+                            category: ['ruby', 'javascript'][id-1])
+    end
+
     def create
       status = success? ? post_create_success : post_create_failure
       render json: status
@@ -11,28 +18,30 @@ module Api
 
     private
 
-    def new_post
+    def template options = {}
+      {
+        data: [ {
+          name: "title",
+          value: options[:title]
+        },
+        {
+          name: "content",
+          value: options[:content]
+        },
+        {
+          name: "category",
+          value: options[:category],
+          array: ['ruby', 'javascript']
+        } ]
+      }
+    end
+
+    def new_post template_options = {}
       {
         collection: {
           version: "1.0",
           href: "/api/posts",
-          template: {
-            data: [
-              {
-                name: "title",
-                value: ""
-              },
-              {
-                name: "content",
-                value: ""
-              },
-              {
-                name: "category",
-                value: "",
-                array: ['ruby', 'javascript']
-              }
-            ]
-          },
+          template: template(template_options),
           items: [
             {
               href: "/api/posts/1",

@@ -125,9 +125,20 @@ describe('Collection JSON Browser', function() {
     })
 
     describe('form', function() {
+      describe('selecting an item to update', function() {
+        it('fetches and populates form with template data', function() {
+          select('#item-to-update').option('/api/posts/2')
+          expect(element('#item-to-update').val()).toEqual('2')
+          // expect(element('#item-to-update').val()).toEqual('/api/posts/2')
+          expect(element('#title').val()).toEqual('title 2')
+          expect(element('#content').val()).toEqual('content 2')
+          expect(element('#category').attr('value')).toEqual('1')
+          // expect(element('#category').attr('value')).toEqual('javascript')
+        })
+      })
+
       describe('creating an item', function() {
         it('list the created item under collection items when the form is submitted successfully', function(){
-
           input('#title').enter('Ruby and Angular')
           input('#content').enter('Happily ever after')
           select('#category').option('ruby')

@@ -29,6 +29,14 @@
           <h2>Template</h2>
           <div class="template thumbnail">
             <form class="form-horizontal" ng-submit="submit()">
+              <div ng-show="collection.items">
+                <fieldset class="control-group">
+                  <label class="control-label" for="item-to-update">item to update</label>
+                  <div class="controls">
+                    <select id='item-to-update' ng-model='item' ng-options="option.value as option.name for option in itemPaths"></select>
+                  </div>
+                </fieldset>
+              </div>
               <fieldset class="control-group field" ng-repeat="field in template">
                 <label class="control-label" for='{{field.name}}'>{{field.name}}</label>
                 <div class="controls" ng-switch on="field.array">
@@ -37,14 +45,6 @@
                   </select>
                 </div>
               </fieldset>
-              <div ng-show="collection.items">
-                <fieldset class="control-group">
-                  <label class="control-label" for="item-to-update">item to update</label>
-                  <div class="controls">
-                    <select id='item-to-updat' ng-model='item' ng-options="option.value as option.name for option in itemPaths"></select>
-                  </div>
-                </fieldset>
-              </div>
               <div class="control-group">
                 <div class="controls">
                   <button type="submit" class="btn">Submit</button>

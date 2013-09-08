@@ -5,7 +5,7 @@ function ApiController($scope, $http, $location) {
 
   $scope.goTo = function(url, fromRel) {
     $scope.fromRel = fromRel
-    get(url)
+    $location.url(url)
   }
 
   $scope.submit = function() {
@@ -17,8 +17,7 @@ function ApiController($scope, $http, $location) {
   $scope.$watch(function() {
     return $location.url();
   }, function(url, oldUrl) {
-    if(url !== oldUrl)
-      get(url)
+    if(url !== oldUrl) { get(url) }
   });
 
   $scope.$watch(function() {
@@ -35,12 +34,15 @@ function ApiController($scope, $http, $location) {
   function get(url, successHandler) {
     $scope.loading = true
 
-    if(successHandler === undefined)
+    var updateUrl = false
+    if(successHandler === undefined) {
       successHandler = responseHandler
+      updateUrl = true
+    }
 
     $http.get(url).success(function(data, status){
       successHandler(data, status)
-      $location.url(url)
+      if(updateUrl) $location.url(url)
     }).error(responseHandler)
   }
 
@@ -101,6 +103,7 @@ function ApiController($scope, $http, $location) {
       //TODO
       //put
     }
+    $scope.loading = false
   }
 
   function setTemplate(data){
