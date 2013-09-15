@@ -9,7 +9,8 @@ function ApiController($scope, $http, $location) {
   }
 
   $scope.submit = function() {
-    $scope.fromRel === 'edit-form' ? put() : post()
+    console.log('=============> ', $scope.item)
+    $scope.item === $scope.collection.href ? post() : put()
   }
 
   $scope.destroy = destroy
@@ -82,34 +83,30 @@ function ApiController($scope, $http, $location) {
     setTemplate(data)
 
     var items = data.collection.items
-    $scope.itemPaths = [{ name: "-- None (POST create) --", value: ''}]
-    if(items)
+    $scope.itemPaths = [{ name: "-- None (POST create) --", value: data.collection.href}]
+    if(items) {
       items.forEach(function(i){
         $scope.itemPaths.push({name: i.href, value: i.href})
       })
-    $scope.item = ""
+    }
+    $scope.item = $scope.itemPaths[0].value
 
     $scope.status = status
     $scope.loading = false
   }
 
   function getTemplate(item) {
-    if(item === undefined || item == '') {
-      //TODO
-      //empty fields
-      //post
-    } else {
-      get(item, setTemplate)
-      //TODO
-      //put
-    }
+    if(item !== undefined) { get(item, setTemplate) }
     $scope.loading = false
   }
 
   function setTemplate(data){
     if(data.collection.template) {
       $scope.template = data.collection.template.data
+    } else {
+      $scope.template = undefined
     }
+
   }
 }
 

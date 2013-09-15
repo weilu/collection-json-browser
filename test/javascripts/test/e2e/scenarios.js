@@ -134,6 +134,9 @@ describe('Collection JSON Browser', function() {
           expect(element('#content').val()).toEqual('content 2')
           expect(element('#category').attr('value')).toEqual('1')
           // expect(element('#category').attr('value')).toEqual('javascript')
+
+          element("form button[type=submit]").click()
+          expect(repeater('ol .item').count()).toBe(1);
         })
       })
 

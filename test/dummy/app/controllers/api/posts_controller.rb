@@ -16,6 +16,11 @@ module Api
       render json: status
     end
 
+    def update
+      puts "in update =====================>"
+      render json: post_create_success
+    end
+
     private
 
     def template options = {}
